@@ -1,0 +1,13 @@
+{
+  "name": "dttchrgn Server",
+  "description": "Code from dttchrgn",
+  "keywords": [ "dttchrgn", "character", "generator", "dT&T" ],
+  "repository": "https://github.com/jamthoyoung/dttchrgn",
+  "logo": "https://xxxxxx/logo.svg",
+  "website": "http://xxxxxx",
+  "success_url": "/",
+  "env" : {
+    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+  }
+}
+

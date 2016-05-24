@@ -33,7 +33,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/api/comments', function(req, res) {
+app.get('/api/kindred', function(req, res) {
   fs.readFile(KINDRED_FILE, function(err, data) {
     if (err) {
       console.error(err);
@@ -43,7 +43,7 @@ app.get('/api/comments', function(req, res) {
   });
 });
 
-app.post('/api/comments', function(req, res) {
+app.post('/api/kindred', function(req, res) {
   fs.readFile(KINDRED_FILE, function(err, data) {
     if (err) {
       console.error(err);

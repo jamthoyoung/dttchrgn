@@ -13,5 +13,20 @@
         "id": 1420070500000,
         "name": "Orc",
         "": "Illkin"
+    },
+    {
+        "id": 1420070500001,
+        "name": "Elf",
+        "type": "Goodkin",
+        "strmod": 1.0,
+        "conmod": 0.67,
+        "dexmod": 1.33,
+        "spdmod": 1.0,
+        "lkmod": 1.0,
+        "iqmod": 1.5,
+        "wizmod": 1.5,
+        "chrmod": 1.5,
+        "heightmod": 1.1,
+        "weightmod": 1.0
     }
 ]

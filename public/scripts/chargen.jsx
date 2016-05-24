@@ -41,13 +41,6 @@ var CharacterBox = React.createClass({
 });
 var AttributeBox = React.createClass({
   render: function(){
-    var calcpersonaladds = function(a) {
-      return
-      Math.min(0, a.str.value-12) +
-      Math.min(0, a.dex.value-12) +
-      Math.min(0, a.spd.value-12) +
-      Math.min(0, a.lk.value-12);
-    };
     return (
       <div className="AttributeBox">
         <Attribute name="STR" data={this.props.attr.str}/>
@@ -58,12 +51,7 @@ var AttributeBox = React.createClass({
         <Attribute name="IQ" data={this.props.attr.iq}/>
         <Attribute name="WIZ" data={this.props.attr.wiz}/>
         <Attribute name="CHR" data={this.props.attr.chr}/>
-        Personal Adds: {
-		Math.max(0,this.props.attr.str.value-12)+
-		Math.max(0,this.props.attr.dex.value-12)+
-		Math.max(0,this.props.attr.spd.value-12)+
-		Math.max(0,this.props.attr.lk.value-12)
-	}
+        <PersonalAdds attr={this.props.attr}/>
       </div>
     );
   }
@@ -73,6 +61,20 @@ var Attribute = React.createClass({
     return (
       <div className="Attribute">
         {this.props.name}:{this.props.data.value}
+      </div>
+    );
+  }
+});
+var PersonalAdds = React.createClass({
+  render: function(){
+    return (
+      <div className="PersonalAdds">
+        Personal Adds: {
+		Math.max(0,this.props.attr.str.value-12)+
+		Math.max(0,this.props.attr.dex.value-12)+
+		Math.max(0,this.props.attr.spd.value-12)+
+		Math.max(0,this.props.attr.lk.value-12)
+	}
       </div>
     );
   }

@@ -34,9 +34,17 @@ var CharacterBox = React.createClass({
     return (
       <div className="CharacterBox">
         <CharacterName name={this.props.data.name} />
+        <CharacterKindred name={this.props.data.kindred.name} />
         <CharacterLevel attr={this.props.data.attributes} />
         <AttributeBox attr={this.props.data.attributes} />
       </div>
+    );
+  }
+});
+var CharacterKindred = React.createClass({
+  render: function(){
+    return (
+        Kindred: {this.props.name}
     );
   }
 });

@@ -34,6 +34,7 @@ var CharacterBox = React.createClass({
     return (
       <div className="CharacterBox">
         Well ain't this exciting, {this.props.data.name}.
+        <CharacterLevel attr={this.props.data.attributes} />
         <AttributeBox attr={this.props.data.attributes} />
       </div>
     );
@@ -74,6 +75,24 @@ var PersonalAdds = React.createClass({
 		Math.max(0,this.props.attr.dex.value-12)+
 		Math.max(0,this.props.attr.spd.value-12)+
 		Math.max(0,this.props.attr.lk.value-12)
+	}
+      </div>
+    );
+  }
+});
+var CharacterLevel = React.createClass({
+  render: function(){
+    return (
+      <div className="CharacterLevel">
+        Level: {
+		Math.floor(Math.max(this.props.attr.str.value,
+		this.props.attr.con.value,
+		this.props.attr.dex.value,
+		this.props.attr.spd.value,
+		this.props.attr.lk.value,
+		this.props.attr.iq.value,
+		this.props.attr.wiz.value,
+		this.props.attr.chr.value)/10)
 	}
       </div>
     );

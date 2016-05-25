@@ -33,10 +33,17 @@ var CharacterBox = React.createClass({
   render: function(){
     return (
       <div className="CharacterBox">
-        Well ain't this exciting, {this.props.data.name}.
+        <CharacterName name={this.props.data.name} />
         <CharacterLevel attr={this.props.data.attributes} />
         <AttributeBox attr={this.props.data.attributes} />
       </div>
+    );
+  }
+});
+var CharacterName = React.createClass({
+  render: function(){
+    return (
+        Name: {this.props.name}
     );
   }
 });

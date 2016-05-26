@@ -3,7 +3,7 @@ var x = {
   "name" : "Bob",
   "kindred": {
     "id": 1420070500001,
-    "name": "Elf",
+    name: "Elf",
     "type": "Goodkin",
     "strmod": 1.0,
     "conmod": 0.67,
@@ -44,14 +44,18 @@ var CharacterBox = React.createClass({
 var CharacterKindred = React.createClass({
   render: function(){
     return (
+      <div>
         Kindred: {this.props.name}
+      </div>
     );
   }
 });
 var CharacterName = React.createClass({
   render: function(){
     return (
+      <div>
         Name: {this.props.name}
+      </div>
     );
   }
 });

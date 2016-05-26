@@ -27,7 +27,7 @@ var x = {
     chr : { value: 18,  specialized:false }
   },
   height: 11,
-  weigth: 11
+  weight: 12
 };
 var CharacterBox = React.createClass({
   render: function(){
@@ -36,7 +36,27 @@ var CharacterBox = React.createClass({
         <CharacterName name={this.props.data.name} />
         <CharacterKindred name={this.props.data.kindred.name} />
         <CharacterLevel attr={this.props.data.attributes} />
+        <CharacterWeight weight={this.props.data.weight} />
+        <CharacterHeight height={this.props.data.height} />
         <AttributeBox attr={this.props.data.attributes} />
+      </div>
+    );
+  }
+});
+var CharacterHeight = React.createClass({
+  render: function(){
+    return (
+      <div>
+        Height: {this.props.height}
+      </div>
+    );
+  }
+});
+var CharacterWeight = React.createClass({
+  render: function(){
+    return (
+      <div>
+        Weight: {this.props.weight}
       </div>
     );
   }

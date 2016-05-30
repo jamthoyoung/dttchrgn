@@ -33,7 +33,7 @@ var CharacterBox = React.createClass({
   rollOneDice: function(){
     return Math.ceil(Math.random() * 6);
   },
-  getMultipleDice: function (numberofdice, taro, mod){
+  getMultipleDice: function (numberofdice, taro){
     var dicearray = [];
     var i = 0;
     while(i < numberofdice){
@@ -52,6 +52,10 @@ var CharacterBox = React.createClass({
 	dicearray = dicearray.concat(this.getMultipleDice(numberofdice,true));
       }
     }
+    return dicearray;
+  },
+  getNewAttributeValue(mod){
+    var dicearray = this.getMultipleDice(3,true);
     var total = dicearray.reduce(
       function(previousValue, currentValue, currentIndex, array) {
 	return previousValue + currentValue;
@@ -61,6 +65,7 @@ var CharacterBox = React.createClass({
     } else {
       total = Math.ceil(total * mod);
     }
+    console.log(dicearray + " * " + mod);
     return { value: total, specialized : false};
   },
   getInitialState: function() {
@@ -69,14 +74,14 @@ var CharacterBox = React.createClass({
   handleRerollClick: function() {
     console.log(this.state);
     var newattributes = {
-      str: this.getMultipleDice(3,true,this.state.kindred.strmod),
-      con: this.getMultipleDice(3,true,this.state.kindred.conmod),
-      dex: this.getMultipleDice(3,true,this.state.kindred.dexmod),
-      spd: this.getMultipleDice(3,true,this.state.kindred.spdmod),
-      lk: this.getMultipleDice(3,true,this.state.kindred.lkmod),
-      iq: this.getMultipleDice(3,true,this.state.kindred.iqmod),
-      wiz: this.getMultipleDice(3,true,this.state.kindred.wizmod),
-      chr: this.getMultipleDice(3,true,this.state.kindred.chrmod)
+      str: this.getNewAttributeValue(this.state.kindred.strmod),
+      con: this.getNewAttributeValue(this.state.kindred.conmod),
+      dex: this.getNewAttributeValue(this.state.kindred.dexmod),
+      spd: this.getNewAttributeValue(this.state.kindred.spdmod),
+      lk: this.getNewAttributeValue(this.state.kindred.lkmod),
+      iq: this.getNewAttributeValue(this.state.kindred.iqmod),
+      wiz: this.getNewAttributeValue(this.state.kindred.wizmod),
+      chr: this.getNewAttributeValue(this.state.kindred.chrmod)
     };
     this.setState( {attributes: newattributes} );
   }, 

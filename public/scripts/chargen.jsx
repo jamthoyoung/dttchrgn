@@ -30,15 +30,66 @@ var x = {
   weight: 12
 };
 var CharacterBox = React.createClass({
+  rollOneDice: function(){
+    return Math.ceil(Math.random() * 6);
+  },
+  getMultipleDice: function (numberofdice, taro, mod){
+    var dicearray = [];
+    var i = 0;
+    while(i < numberofdice){
+      dicearray.push(this.rollOneDice());
+      i =  i + 1;
+    }
+    if (taro){
+      var firstvalue = dicearray[0];
+      var issame = true;
+      for(var x = 1; x < numberofdice; x++){
+	if(firstvalue !== dicearray[x]){
+	  issame = false;
+	}
+      }
+      if(issame){
+	dicearray = dicearray.concat(this.getMultipleDice(numberofdice,true));
+      }
+    }
+    var total = dicearray.reduce(
+      function(previousValue, currentValue, currentIndex, array) {
+	return previousValue + currentValue;
+      });
+    if(mod > 1){
+      total = Math.floor(total * mod);
+    } else {
+      total = Math.ceil(total * mod);
+    }
+    return { value: total, specialized : false};
+  },
+  getInitialState: function() {
+      return x; 
+  },
+  handleRerollClick: function() {
+    console.log(this.state);
+    var newattributes = {
+      str: this.getMultipleDice(3,true,this.state.kindred.strmod),
+      con: this.getMultipleDice(3,true,this.state.kindred.conmod),
+      dex: this.getMultipleDice(3,true,this.state.kindred.dexmod),
+      spd: this.getMultipleDice(3,true,this.state.kindred.spdmod),
+      lk: this.getMultipleDice(3,true,this.state.kindred.lkmod),
+      iq: this.getMultipleDice(3,true,this.state.kindred.iqmod),
+      wiz: this.getMultipleDice(3,true,this.state.kindred.wizmod),
+      chr: this.getMultipleDice(3,true,this.state.kindred.chrmod)
+    };
+    this.setState( {attributes: newattributes} );
+  }, 
   render: function(){
     return (
       <div className="CharacterBox">
+        <span onClick={this.handleRerollClick}>Reroll</span>
         <CharacterName name={this.props.data.name} />
         <CharacterKindred name={this.props.data.kindred.name} />
         <CharacterLevel attr={this.props.data.attributes} />
         <CharacterWeight weight={this.props.data.weight} />
         <CharacterHeight height={this.props.data.height} />
-        <AttributeBox attr={this.props.data.attributes} />
+        <AttributeBox attr={this.state.attributes} />
       </div>
     );
   }

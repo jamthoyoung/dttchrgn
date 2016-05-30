@@ -60,3 +60,9 @@ p, ul {
 ul {
   padding-left: 30px;
 }
+div {
+  border: 1px solid #88d;
+  margin 3px 3px 3px 3px;
+  padding 3px 3px 3px 3px;
+}
+

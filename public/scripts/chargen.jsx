@@ -83,7 +83,10 @@ var CharacterBox = React.createClass({
       wiz: this.getNewAttributeValue(this.state.kindred.wizmod),
       chr: this.getNewAttributeValue(this.state.kindred.chrmod)
     };
-    this.setState( {attributes: newattributes} );
+    this.setState( {attributes: newattributes,
+      weight: this.getNewAttributeValue(this.state.kindred.weightmod),
+      height: this.getNewAttributeValue(this.state.kindred.heightmod)
+    } );
   }, 
   render: function(){
     return (

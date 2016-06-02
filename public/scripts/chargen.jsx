@@ -54,8 +54,8 @@ var CharacterBox = React.createClass({
     }
     return dicearray;
   },
-  getNewAttributeValue(mod){
-    var dicearray = this.getMultipleDice(3,true);
+  getNewAttributeValue(mod,taro){
+    var dicearray = this.getMultipleDice(3,taro);
     var total = dicearray.reduce(
       function(previousValue, currentValue, currentIndex, array) {
 	return previousValue + currentValue;
@@ -72,21 +72,21 @@ var CharacterBox = React.createClass({
       return x; 
   },
   handleRerollClick: function() {
-    console.log(this.state);
+    console.log("prestate:" + this.state);
     var newattributes = {
-      str: this.getNewAttributeValue(this.state.kindred.strmod),
-      con: this.getNewAttributeValue(this.state.kindred.conmod),
-      dex: this.getNewAttributeValue(this.state.kindred.dexmod),
-      spd: this.getNewAttributeValue(this.state.kindred.spdmod),
-      lk: this.getNewAttributeValue(this.state.kindred.lkmod),
-      iq: this.getNewAttributeValue(this.state.kindred.iqmod),
-      wiz: this.getNewAttributeValue(this.state.kindred.wizmod),
-      chr: this.getNewAttributeValue(this.state.kindred.chrmod)
+      str: this.getNewAttributeValue(this.state.kindred.strmod,true),
+      con: this.getNewAttributeValue(this.state.kindred.conmod,true),
+      dex: this.getNewAttributeValue(this.state.kindred.dexmod,true),
+      spd: this.getNewAttributeValue(this.state.kindred.spdmod,true),
+      lk: this.getNewAttributeValue(this.state.kindred.lkmod,true),
+      iq: this.getNewAttributeValue(this.state.kindred.iqmod,true),
+      wiz: this.getNewAttributeValue(this.state.kindred.wizmod,true),
+      chr: this.getNewAttributeValue(this.state.kindred.chrmod,true)
     };
-    this.setState( {attributes: newattributes,
-      weight: this.getNewAttributeValue(this.state.kindred.weightmod),
-      height: this.getNewAttributeValue(this.state.kindred.heightmod)
-    } );
+    var wt = this.getNewAttributeValue(this.state.kindred.weightmod,false).value;
+    var ht = this.getNewAttributeValue(this.state.kindred.heightmod,false).value;
+    console.log("new wt + ht:" + wt + " " + ht); 
+    this.setState( {attributes: newattributes, weight: wt, height: ht } );
   }, 
   render: function(){
     return (
@@ -95,8 +95,8 @@ var CharacterBox = React.createClass({
         <CharacterName name={this.props.data.name} />
         <CharacterKindred name={this.props.data.kindred.name} />
         <CharacterLevel attr={this.props.data.attributes} />
-        <CharacterWeight weight={this.props.data.weight} />
-        <CharacterHeight height={this.props.data.height} />
+        <CharacterWeight weight={this.state.weight} />
+        <CharacterHeight height={this.state.height} />
         <AttributeBox attr={this.state.attributes} />
       </div>
     );
@@ -106,7 +106,7 @@ var CharacterHeight = React.createClass({
   render: function(){
     return (
       <div>
-        Height: {this.props.height}
+        Height: {126.4 + (this.props.height*5.6)} cm
       </div>
     );
   }
@@ -115,7 +115,7 @@ var CharacterWeight = React.createClass({
   render: function(){
     return (
       <div>
-        Weight: {this.props.weight}
+        Weight: {126.4 + (this.props.weight*5.6)} Kg
       </div>
     );
   }

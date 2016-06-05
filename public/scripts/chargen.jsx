@@ -3,17 +3,47 @@ var kindredlist =
     {
         "id": 1388534400000,
         "name": "Human",
-        "type": "Goodkin"
+        "type": "Goodkin",
+        "strmod": 1.0,
+        "conmod": 1.0,
+        "dexmod": 1.0,
+        "spdmod": 1.0,
+        "lkmod": 1.0,
+        "iqmod": 1.0,
+        "wizmod": 1.0,
+        "chrmod": 1.0,
+        "heightmod": 1.0,
+        "weightmod": 1.0
     },
     {
         "id": 1420070400000,
-        "name": "Dwarf",
-        "type": "Goodkin"
+        "name": "Dwarf (Gristlegrim)",
+        "type": "Goodkin",
+        "strmod": 2.0,
+        "conmod": 2.0,
+        "dexmod": 1.0,
+        "spdmod": 1.0,
+        "lkmod": 0.75,
+        "iqmod": 1.0,
+        "wizmod": 1.0,
+        "chrmod": 1.0,
+        "heightmod": 0.67,
+        "weightmod": 2.0
     },
     {
         "id": 1420070500000,
-        "name": "Orc",
-        "type": "Illkin"
+        "name": "Uruk (Orc)",
+        "type": "Illkin",
+        "strmod": 1.1,
+        "conmod": 1.1,
+        "dexmod": 1.0,
+        "spdmod": 1.0,
+        "lkmod": 0.67,
+        "iqmod": 0.75,
+        "wizmod": 1.0,
+        "chrmod": 1.1,
+        "heightmod": 1.0,
+        "weightmod": 1.0
     },
     {
         "id": 1420070500001,
@@ -121,7 +151,12 @@ var CharacterBox = React.createClass({
     this.setState( {attributes: newattributes, weight: wt, height: ht } );
   }, 
   kindredChange: function(value){
-    alert('value:' + value);
+    for(var i = 0; i < this.props.kindredlist.length; i++) {
+      if(value == this.props.kindredlist[i].id){
+        console.log(this.props.kindredlist[i]);
+        this.setState({kindred: this.props.kindredlist[i]});
+      }
+    }
   },
   render: function(){
     return (
@@ -129,7 +164,7 @@ var CharacterBox = React.createClass({
         <span onClick={this.handleRerollClick}>Reroll</span>
         <CharacterName name={this.props.data.name} />
         <CharacterKindred kindredoptions={this.props.kindredlist}
-            value={1420070500001}
+            value={this.state.kindred.id}
             onChange={this.kindredChange}
           />
         <CharacterLevel attr={this.props.data.attributes} />
@@ -165,9 +200,6 @@ var CharacterWeight = React.createClass({
 var CharacterKindred = React.createClass({
   onChange: function(event) {
     this.props.onChange(event.target.value);
-  },
-  makeOption: function(kin, key) {
-    return <option key={key} value={kin.id}>{kin.name}</option>;
   },
   render: function(){
     return (

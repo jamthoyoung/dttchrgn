@@ -1,4 +1,36 @@
-
+var kindredlist =
+[
+    {
+        "id": 1388534400000,
+        "name": "Human",
+        "type": "Goodkin"
+    },
+    {
+        "id": 1420070400000,
+        "name": "Dwarf",
+        "type": "Goodkin"
+    },
+    {
+        "id": 1420070500000,
+        "name": "Orc",
+        "type": "Illkin"
+    },
+    {
+        "id": 1420070500001,
+        "name": "Elf",
+        "type": "Goodkin",
+        "strmod": 1.0,
+        "conmod": 0.67,
+        "dexmod": 1.33,
+        "spdmod": 1.0,
+        "lkmod": 1.0,
+        "iqmod": 1.5,
+        "wizmod": 1.5,
+        "chrmod": 1.5,
+        "heightmod": 1.1,
+        "weightmod": 1.0
+    }
+];
 var x = {
   "name" : "Bob",
   "kindred": {
@@ -96,7 +128,7 @@ var CharacterBox = React.createClass({
       <div className="CharacterBox">
         <span onClick={this.handleRerollClick}>Reroll</span>
         <CharacterName name={this.props.data.name} />
-        <CharacterKindred name={this.props.data.kindred.name}
+        <CharacterKindred kindredoptions={this.props.kindredlist}
             value={1420070500001}
             onChange={this.kindredChange}
           />
@@ -134,15 +166,17 @@ var CharacterKindred = React.createClass({
   onChange: function(event) {
     this.props.onChange(event.target.value);
   },
+  makeOption: function(kin, key) {
+    return <option key={key} value={kin.id}>{kin.name}</option>;
+  },
   render: function(){
     return (
       <div className="CharacterKindred">
         <label>Kindred: {this.props.name}</label>
         <select onChange={this.onChange} value={this.props.value}>
-          <option value="1420070400000">Dwarf</option>
-          <option value="1420070500001">Elf</option>
-          <option value="1388534400000">Human</option>
-          <option value="1420070500000">Orc</option>
+          {this.props.kindredoptions.map(function(kin,key){
+            return <option key={key} value={kin.id}>{kin.name}</option>
+          })}
         </select>
       </div>
     );
@@ -217,6 +251,6 @@ var CharacterLevel = React.createClass({
 });
 
 ReactDOM.render(
-  <CharacterBox data={x} />,
+  <CharacterBox data={x} kindredlist={kindredlist}/>,
   document.getElementById('content')
 );

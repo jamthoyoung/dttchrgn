@@ -88,14 +88,20 @@ var CharacterBox = React.createClass({
     console.log("new wt + ht:" + wt + " " + ht); 
     this.setState( {attributes: newattributes, weight: wt, height: ht } );
   }, 
+  kindredChange: function(value){
+    alert('value:' + value);
+  },
   render: function(){
     return (
       <div className="CharacterBox">
         <span onClick={this.handleRerollClick}>Reroll</span>
         <CharacterName name={this.props.data.name} />
-        <CharacterKindred name={this.props.data.kindred.name} />
+        <CharacterKindred name={this.props.data.kindred.name}
+            value={1420070500001}
+            onChange={this.kindredChange}
+          />
         <CharacterLevel attr={this.props.data.attributes} />
-        <CharacterWeight weight={this.state.weight} />
+        <CharacterWeight weight={this.state.weight} height={this.state.height}/>
         <CharacterHeight height={this.state.height} />
         <AttributeBox attr={this.state.attributes} />
       </div>
@@ -104,27 +110,40 @@ var CharacterBox = React.createClass({
 });
 var CharacterHeight = React.createClass({
   render: function(){
+    var heightInCm = Math.round(126.4 + (this.props.height*5.6));
     return (
       <div>
-        Height: {126.4 + (this.props.height*5.6)} cm
+        Height: {heightInCm} cm
       </div>
     );
   }
 });
 var CharacterWeight = React.createClass({
   render: function(){
+    var heightInCm = 126.4 + (this.props.height*5.6);
+    // ideal weight for male uses devine formula
+    var idealWeightKg = Math.round(50 + (0.9055118 * (heightInCm-152.4)));
     return (
       <div>
-        Weight: {126.4 + (this.props.weight*5.6)} Kg
+        Weight: {idealWeightKg} kg
       </div>
     );
   }
 });
 var CharacterKindred = React.createClass({
+  onChange: function(event) {
+    this.props.onChange(event.target.value);
+  },
   render: function(){
     return (
-      <div>
-        Kindred: {this.props.name}
+      <div className="CharacterKindred">
+        <label>Kindred: {this.props.name}</label>
+        <select onChange={this.onChange} value={this.props.value}>
+          <option value="1420070400000">Dwarf</option>
+          <option value="1420070500001">Elf</option>
+          <option value="1388534400000">Human</option>
+          <option value="1420070500000">Orc</option>
+        </select>
       </div>
     );
   }

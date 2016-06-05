@@ -7,12 +7,12 @@
     {
         "id": 1420070400000,
         "name": "Dwarf",
-        "": "Goodkin"
+        "type": "Goodkin"
     },
     {
         "id": 1420070500000,
         "name": "Orc",
-        "": "Illkin"
+        "type": "Illkin"
     },
     {
         "id": 1420070500001,

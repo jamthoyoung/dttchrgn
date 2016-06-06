@@ -79,14 +79,14 @@ var x = {
     "weightmod": 1.0
   },
   "attributes" : {
-    str : { value: 15,  specialized:false },
-    con : { value: 11,  specialized:false },
-    dex : { value: 12,  specialized:false },
-    spd : { value: 13,  specialized:false },
-    lk : { value: 14,  specialized:false },
-    iq : { value: 15,  specialized:false },
-    wiz : { value: 16,  specialized:false },
-    chr : { value: 18,  specialized:false }
+    str : [ 1, 1, 2 ],
+    con : [ 1, 1, 2 ],
+    dex : [ 1, 1, 2 ],
+    spd : [ 1, 1, 2 ],
+    lk : [ 1, 1, 2 ],
+    iq : [ 1, 1, 2 ],
+    wiz : [ 1, 1, 2 ],
+    chr : [ 1, 1, 2 ]
   },
   height: 11,
   weight: 12
@@ -136,14 +136,14 @@ var CharacterBox = React.createClass({
   handleRerollClick: function() {
     console.log("prestate:" + this.state);
     var newattributes = {
-      str: this.getNewAttributeValue(this.state.kindred.strmod,true),
-      con: this.getNewAttributeValue(this.state.kindred.conmod,true),
-      dex: this.getNewAttributeValue(this.state.kindred.dexmod,true),
-      spd: this.getNewAttributeValue(this.state.kindred.spdmod,true),
-      lk: this.getNewAttributeValue(this.state.kindred.lkmod,true),
-      iq: this.getNewAttributeValue(this.state.kindred.iqmod,true),
-      wiz: this.getNewAttributeValue(this.state.kindred.wizmod,true),
-      chr: this.getNewAttributeValue(this.state.kindred.chrmod,true)
+      str: this.getMultipleDice(3,true),
+      con: this.getMultipleDice(3,true),
+      dex: this.getMultipleDice(3,true),
+      spd: this.getMultipleDice(3,true),
+      lk: this.getMultipleDice(3,true),
+      iq: this.getMultipleDice(3,true),
+      wiz: this.getMultipleDice(3,true),
+      chr: this.getMultipleDice(3,true)
     };
     var wt = this.getNewAttributeValue(this.state.kindred.weightmod,false).value;
     var ht = this.getNewAttributeValue(this.state.kindred.heightmod,false).value;
@@ -170,7 +170,7 @@ var CharacterBox = React.createClass({
         <CharacterLevel attr={this.props.data.attributes} />
         <CharacterWeight weight={this.state.weight} height={this.state.height}/>
         <CharacterHeight height={this.state.height} />
-        <AttributeBox attr={this.state.attributes} />
+        <AttributeBox attr={this.state.attributes} kindred={this.state.kindred}/>
       </div>
     );
   }
@@ -227,24 +227,33 @@ var AttributeBox = React.createClass({
   render: function(){
     return (
       <div className="AttributeBox">
-        <Attribute name="STR" data={this.props.attr.str}/>
-        <Attribute name="CON" data={this.props.attr.con}/>
-        <Attribute name="DEX" data={this.props.attr.dex}/>
-        <Attribute name="SPD" data={this.props.attr.spd}/>
-        <Attribute name="LK" data={this.props.attr.lk}/>
-        <Attribute name="IQ" data={this.props.attr.iq}/>
-        <Attribute name="WIZ" data={this.props.attr.wiz}/>
-        <Attribute name="CHR" data={this.props.attr.chr}/>
-        <PersonalAdds attr={this.props.attr}/>
+        <Attribute name="STR" data={this.props.attr.str} kmod={this.props.kindred.strmod}/>
+        <Attribute name="CON" data={this.props.attr.con} kmod={this.props.kindred.conmod}/>
+        <Attribute name="DEX" data={this.props.attr.dex} kmod={this.props.kindred.dexmod}/>
+        <Attribute name="SPD" data={this.props.attr.spd} kindred={this.props.kindred.spdmod}/>
+        <Attribute name="LK" data={this.props.attr.lk} kindred={this.props.kindred.lkmod}/>
+        <Attribute name="IQ" data={this.props.attr.iq} kindred={this.props.kindred.iqmod}/>
+        <Attribute name="WIZ" data={this.props.attr.wiz} kindred={this.props.kindred.wizmod}/>
+        <Attribute name="CHR" data={this.props.attr.chr} kindred={this.props.kindred.chrmod}/>
+        <PersonalAdds attr={this.props.attr} kindred={this.props.kindred} />
       </div>
     );
   }
 });
 var Attribute = React.createClass({
   render: function(){
+    var total = this.props.data.reduce(
+      function(previousValue, currentValue, currentIndex, array) {
+	return previousValue + currentValue;
+      });
+    if(this.props.kmod > 1){
+      total = Math.floor(total * this.props.kmod);
+    } else {
+      total = Math.ceil(total * this.props.kmod);
+    }
     return (
       <div className="Attribute">
-        {this.props.name}:{this.props.data.value}
+        {this.props.name}:{total}
       </div>
     );
   }

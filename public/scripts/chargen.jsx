@@ -230,17 +230,21 @@ var AttributeBox = React.createClass({
         <Attribute name="STR" data={this.props.attr.str} kmod={this.props.kindred.strmod}/>
         <Attribute name="CON" data={this.props.attr.con} kmod={this.props.kindred.conmod}/>
         <Attribute name="DEX" data={this.props.attr.dex} kmod={this.props.kindred.dexmod}/>
-        <Attribute name="SPD" data={this.props.attr.spd} kindred={this.props.kindred.spdmod}/>
-        <Attribute name="LK" data={this.props.attr.lk} kindred={this.props.kindred.lkmod}/>
-        <Attribute name="IQ" data={this.props.attr.iq} kindred={this.props.kindred.iqmod}/>
-        <Attribute name="WIZ" data={this.props.attr.wiz} kindred={this.props.kindred.wizmod}/>
-        <Attribute name="CHR" data={this.props.attr.chr} kindred={this.props.kindred.chrmod}/>
+        <Attribute name="SPD" data={this.props.attr.spd} kmod={this.props.kindred.spdmod}/>
+        <Attribute name="LK" data={this.props.attr.lk} kmod={this.props.kindred.lkmod}/>
+        <Attribute name="IQ" data={this.props.attr.iq} kmod={this.props.kindred.iqmod}/>
+        <Attribute name="WIZ" data={this.props.attr.wiz} kmod={this.props.kindred.wizmod}/>
+        <Attribute name="CHR" data={this.props.attr.chr} kmod={this.props.kindred.chrmod}/>
         <PersonalAdds attr={this.props.attr} kindred={this.props.kindred} />
       </div>
     );
   }
 });
 var Attribute = React.createClass({
+  propTypes: {
+    data: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
+    kmod: React.PropTypes.number.isRequired
+  },
   render: function(){
     var total = this.props.data.reduce(
       function(previousValue, currentValue, currentIndex, array) {

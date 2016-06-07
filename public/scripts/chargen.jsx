@@ -267,10 +267,21 @@ var PersonalAdds = React.createClass({
     var reducer = function(previousValue, currentValue, currentIndex, array) {
       return previousValue + currentValue;
     };
-    var strtotal = this.props.attr.str.reduce(reducer);
-    var dextotal = this.props.attr.dex.reduce(reducer);
-    var spdtotal = this.props.attr.spd.reduce(reducer);
-    var lktotal = this.props.attr.lk.reduce(reducer);
+    var multiplier = function(org, mod){
+      if(mod > 1){
+        return Math.floor(org * mod);
+      } else {
+        return Math.ceil(org * mod);
+      }
+    };
+    var strtotal = multiplier(this.props.attr.str.reduce(reducer),
+                              this.props.kindred.strmod);
+    var dextotal = multiplier(this.props.attr.dex.reduce(reducer),
+                              this.props.kindred.dexmod);
+    var spdtotal = multiplier(this.props.attr.spd.reduce(reducer),
+                              this.props.kindred.spdmod);
+    var lktotal = multiplier(this.props.attr.lk.reduce(reducer),
+                              this.props.kindred.lkmod);
     return (
       <div className="PersonalAdds">
         Personal Adds: {

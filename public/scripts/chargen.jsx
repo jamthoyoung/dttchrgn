@@ -167,7 +167,7 @@ var CharacterBox = React.createClass({
             value={this.state.kindred.id}
             onChange={this.kindredChange}
           />
-        <CharacterLevel attr={this.props.data.attributes} />
+        <CharacterLevel attr={this.props.data.attributes} kindred={this.state.kindred}/>
         <CharacterWeight weight={this.state.weight} height={this.state.height}/>
         <CharacterHeight height={this.state.height} />
         <AttributeBox attr={this.state.attributes} kindred={this.state.kindred}/>
@@ -264,13 +264,20 @@ var Attribute = React.createClass({
 });
 var PersonalAdds = React.createClass({
   render: function(){
+    var reducer = function(previousValue, currentValue, currentIndex, array) {
+      return previousValue + currentValue;
+    };
+    var strtotal = this.props.attr.str.reduce(reducer);
+    var dextotal = this.props.attr.dex.reduce(reducer);
+    var spdtotal = this.props.attr.spd.reduce(reducer);
+    var lktotal = this.props.attr.lk.reduce(reducer);
     return (
       <div className="PersonalAdds">
         Personal Adds: {
-		Math.max(0,this.props.attr.str.value-12)+
-		Math.max(0,this.props.attr.dex.value-12)+
-		Math.max(0,this.props.attr.spd.value-12)+
-		Math.max(0,this.props.attr.lk.value-12)
+		Math.max(0,strtotal-12)+
+		Math.max(0,dextotal-12)+
+		Math.max(0,spdtotal-12)+
+		Math.max(0,lktotal-12)
 	}
       </div>
     );

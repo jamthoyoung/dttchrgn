@@ -264,9 +264,9 @@ var Attribute = React.createClass({
 });
 var PersonalAdds = React.createClass({
   render: function(){
-    var reducer = function(previousValue, currentValue, currentIndex, array) {
+   var sumofarray = function(previousValue, currentValue, currentIndex, array) {
       return previousValue + currentValue;
-    };
+   };
     var multiplier = function(org, mod){
       if(mod > 1){
         return Math.floor(org * mod);
@@ -274,13 +274,13 @@ var PersonalAdds = React.createClass({
         return Math.ceil(org * mod);
       }
     };
-    var strtotal = multiplier(this.props.attr.str.reduce(reducer),
+    var strtotal = multiplier(this.props.attr.str.reduce(sumofarray),
                               this.props.kindred.strmod);
-    var dextotal = multiplier(this.props.attr.dex.reduce(reducer),
+    var dextotal = multiplier(this.props.attr.dex.reduce(sumofarray),
                               this.props.kindred.dexmod);
-    var spdtotal = multiplier(this.props.attr.spd.reduce(reducer),
+    var spdtotal = multiplier(this.props.attr.spd.reduce(sumofarray),
                               this.props.kindred.spdmod);
-    var lktotal = multiplier(this.props.attr.lk.reduce(reducer),
+    var lktotal = multiplier(this.props.attr.lk.reduce(sumofarray),
                               this.props.kindred.lkmod);
     return (
       <div className="PersonalAdds">
@@ -296,17 +296,39 @@ var PersonalAdds = React.createClass({
 });
 var CharacterLevel = React.createClass({
   render: function(){
+   var sumofarray = function(previousValue, currentValue, currentIndex, array) {
+      return previousValue + currentValue;
+   };
+    var kinmod = function(array, mod){
+      var org = array.reduce(sumofarray);
+      if(mod > 1){
+        return Math.floor(org * mod);
+      } else {
+        return Math.ceil(org * mod);
+      }
+    };
     return (
       <div className="CharacterLevel">
         Level: {
-		Math.floor(Math.max(this.props.attr.str.value,
-		this.props.attr.con.value,
-		this.props.attr.dex.value,
-		this.props.attr.spd.value,
-		this.props.attr.lk.value,
-		this.props.attr.iq.value,
-		this.props.attr.wiz.value,
-		this.props.attr.chr.value)/10)
+		Math.floor(
+                  Math.max(
+                    kinmod(this.props.attr.str,
+                      this.props.kindred.strmod),
+		    kinmod(this.props.attr.con,
+                      this.props.kindred.conmod),
+		    kinmod(this.props.attr.dex,
+                      this.props.kindred.dexmod),
+		    kinmod(this.props.attr.spd,
+                      this.props.kindred.spdmod),
+		    kinmod(this.props.attr.lk,
+                      this.props.kindred.lkmod),
+		    kinmod(this.props.attr.iq,
+                      this.props.kindred.iqmod),
+		    kinmod(this.props.attr.wiz,
+                      this.props.kindred.wizmod),
+		    kinmod(this.props.attr.chr,
+                      this.props.kindred.chrmod)
+                / 10)
 	}
       </div>
     );

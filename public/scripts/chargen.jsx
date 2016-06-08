@@ -163,6 +163,8 @@ var CharacterBox = React.createClass({
       <div className="CharacterBox">
         <span onClick={this.handleRerollClick}>Reroll</span>
         <CharacterName name={this.props.data.name} />
+        <CharacterClass />
+        <CharacterGender />
         <CharacterKindred kindredoptions={this.props.kindredlist}
             value={this.state.kindred.id}
             onChange={this.kindredChange}
@@ -175,6 +177,24 @@ var CharacterBox = React.createClass({
                          height={this.state.height} />
         <AttributeBox attr={this.state.attributes} kindred={this.state.kindred}/>
       </div>
+    );
+  }
+});
+var CharacterGender = React.createClass({
+  render: function(){
+    return (
+    <div className="CharacterGender">
+      Gender:
+    </div>
+    );
+  }
+});
+var CharacterClass = React.createClass({
+  render: function(){
+    return (
+    <div className="CharacterClass">
+      Class:
+    </div>
     );
   }
 });

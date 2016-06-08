@@ -167,9 +167,12 @@ var CharacterBox = React.createClass({
             value={this.state.kindred.id}
             onChange={this.kindredChange}
           />
-        <CharacterLevel attr={this.props.data.attributes} kindred={this.state.kindred}/>
-        <CharacterWeight weight={this.state.weight} height={this.state.height}/>
-        <CharacterHeight height={this.state.height} />
+        <CharacterLevel attr={this.state.attributes} kindred={this.state.kindred}/>
+        <CharacterWeight kindred={this.state.kindred} 
+                         weight={this.state.weight} 
+                         height={this.state.height}/>
+        <CharacterHeight kindred={this.state.kindred}
+                         height={this.state.height} />
         <AttributeBox attr={this.state.attributes} kindred={this.state.kindred}/>
       </div>
     );
@@ -177,7 +180,9 @@ var CharacterBox = React.createClass({
 });
 var CharacterHeight = React.createClass({
   render: function(){
-    var heightInCm = Math.round(126.4 + (this.props.height*5.6));
+    var heightInCm = Math.round(
+       (126.4 + (this.props.height*5.6)) * this.props.kindred.heightmod
+                               );
     return (
       <div>
         Height: {heightInCm} cm
@@ -189,7 +194,9 @@ var CharacterWeight = React.createClass({
   render: function(){
     var heightInCm = 126.4 + (this.props.height*5.6);
     // ideal weight for male uses devine formula
-    var idealWeightKg = Math.round(50 + (0.9055118 * (heightInCm-152.4)));
+    var idealWeightKg = Math.round(
+          (50 + (0.9055118 * (heightInCm-152.4))) * this.props.kindred.weightmod
+                           );
     return (
       <div>
         Weight: {idealWeightKg} kg
@@ -328,7 +335,8 @@ var CharacterLevel = React.createClass({
                       this.props.kindred.wizmod),
 		    kinmod(this.props.attr.chr,
                       this.props.kindred.chrmod)
-                / 10)
+                  ) / 10
+                )
 	}
       </div>
     );

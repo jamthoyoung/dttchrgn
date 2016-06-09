@@ -63,6 +63,7 @@ var kindredlist =
 ];
 var x = {
   "name" : "Bob",
+  "gender" : "Male",
   "kindred": {
     "id": 1420070500001,
     name: "Elf",
@@ -150,6 +151,9 @@ var CharacterBox = React.createClass({
     console.log("new wt + ht:" + wt + " " + ht); 
     this.setState( {attributes: newattributes, weight: wt, height: ht } );
   }, 
+  genderChange: function(value){
+    this.setState({gender: value});
+  },
   kindredChange: function(value){
     for(var i = 0; i < this.props.kindredlist.length; i++) {
       if(value == this.props.kindredlist[i].id){
@@ -164,11 +168,12 @@ var CharacterBox = React.createClass({
         <span onClick={this.handleRerollClick}>Reroll</span>
         <CharacterName name={this.props.data.name} />
         <CharacterClass />
-        <CharacterGender />
+        <CharacterGender
+            value={this.state.gender}
+            onChange={this.genderChange} />
         <CharacterKindred kindredoptions={this.props.kindredlist}
             value={this.state.kindred.id}
-            onChange={this.kindredChange}
-          />
+            onChange={this.kindredChange} />
         <CharacterLevel attr={this.state.attributes} kindred={this.state.kindred}/>
         <CharacterWeight kindred={this.state.kindred} 
                          weight={this.state.weight} 
@@ -181,10 +186,17 @@ var CharacterBox = React.createClass({
   }
 });
 var CharacterGender = React.createClass({
+  onChange: function(event) {
+    this.props.onChange(event.target.value);
+  },
   render: function(){
     return (
     <div className="CharacterGender">
-      Gender:
+        <label>Gender: </label>
+        <select onChange={this.onChange} value={this.props.value}>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
     </div>
     );
   }
@@ -231,7 +243,7 @@ var CharacterKindred = React.createClass({
   render: function(){
     return (
       <div className="CharacterKindred">
-        <label>Kindred: {this.props.name}</label>
+        <label>Kindred: </label>
         <select onChange={this.onChange} value={this.props.value}>
           {this.props.kindredoptions.map(function(kin,key){
             return <option key={key} value={kin.id}>{kin.name}</option>

@@ -62,7 +62,7 @@ var kindredlist =
     }
 ];
 var x = {
-  "name" : "Bob",
+  "name" : "Enter name",
   "gender" : "Male",
   "kindred": {
     "id": 1420070500001,
@@ -158,6 +158,9 @@ var CharacterBox = React.createClass({
   classChange: function(value){
     this.setState({class: value});
   },
+  nameChange: function(value){
+    this.setState({name: value});
+  },
   kindredChange: function(value){
     for(var i = 0; i < this.props.kindredlist.length; i++) {
       if(value == this.props.kindredlist[i].id){
@@ -170,7 +173,8 @@ var CharacterBox = React.createClass({
     return (
       <div className="CharacterBox">
         <span onClick={this.handleRerollClick}>Reroll</span>
-        <CharacterName name={this.props.data.name} />
+        <CharacterName name={this.state.name}
+            onChange={this.nameChange} />
         <CharacterClass 
             value={this.state.class}
             onChange={this.classChange} />
@@ -268,10 +272,13 @@ var CharacterKindred = React.createClass({
   }
 });
 var CharacterName = React.createClass({
+  onChange: function(event) {
+    this.props.onChange(event.target.value);
+  },
   render: function(){
     return (
       <div>
-        Name: {this.props.name}
+        Name: <input onChange={this.onChange} type="text" value={this.props.name}/>
       </div>
     );
   }

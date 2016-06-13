@@ -208,6 +208,9 @@ var CharacterGender = React.createClass({
   }
 });
 var CharacterClass = React.createClass({
+  onChange: function(event) {
+    this.props.onChange(event.target.value);
+  },
   render: function(){
     return (
     <div className="CharacterClass">

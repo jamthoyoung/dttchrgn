@@ -91,7 +91,26 @@ var x = {
   },
   class: "Warrior",
   height: 11,
-  weight: 12
+  weight: 12,
+  equipment : [
+    { name: "Short Sword",
+      damagedice: 3,
+      damageadds: 0,
+      weight: 25,
+      active: true
+    },
+    { name: "Sheild",
+      armourpts: 1,
+      weight: 30,
+      active: true
+    },
+    { name: "Mace",
+      damagedice: 3,
+      damageadds: 0,
+      weight: 25,
+      active: false
+    } 
+  ]
 };
 var CharacterBox = React.createClass({
   rollOneDice: function(){

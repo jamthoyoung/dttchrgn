@@ -336,7 +336,7 @@ var Attribute = React.createClass({
     }
     return (
       <div className="Attribute">
-        {this.props.name}:{total}
+        <span className="name">{this.props.name}</span><span className="total">{total}</span>
       </div>
     );
   }
